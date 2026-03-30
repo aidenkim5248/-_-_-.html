@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>강쥐엄마 앱 다운로드</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    background: linear-gradient(145deg, #FF6B35 0%, #FF8C5A 50%, #FFB347 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .card {
+    background: white;
+    border-radius: 24px;
+    padding: 40px 36px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+  .paw { font-size: 36px; margin-bottom: 8px; }
+  .brand { font-size: 32px; font-weight: 900; color: #FF6B35; margin-bottom: 4px; }
+  .slogan { font-size: 13px; color: #999; margin-bottom: 28px; }
+
+  .status-box {
+    background: #FFF8F5;
+    border: 2px solid #FFE0D0;
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 28px;
+    font-size: 14px;
+    color: #555;
+  }
+  .status-box span { font-weight: 700; color: #FF6B35; }
+
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    margin-bottom: 12px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+  .btn-ios { background: #2D2D2D; color: white; }
+  .btn-android { background: #FF6B35; color: white; }
+  .btn-icon { font-size: 20px; }
+  .btn-text { text-align: left; }
+  .btn-text small { display: block; font-size: 11px; font-weight: 400; opacity: 0.75; }
+
+  .divider { color: #ccc; font-size: 12px; margin: 4px 0 16px; }
+  .footer { margin-top: 24px; font-size: 11px; color: #bbb; }
+
+  /* Auto-redirect overlay */
+  .auto-redirect {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .auto-redirect.show { display: flex; }
+  .redirect-msg { font-size: 15px; color: #555; }
+  .redirect-msg strong { color: #FF6B35; }
+  .progress-bar {
+    width: 100%;
+    height: 6px;
+    background: #FFE0D0;
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 4px 0;
+  }
+  .progress-fill {
+    height: 100%;
+    background: #FF6B35;
+    border-radius: 3px;
+    width: 0%;
+    transition: width 1.8s linear;
+  }
+  .manual-btns { width: 100%; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="paw">🐾</div>
+  <div class="brand">강쥐엄마</div>
+  <div class="slogan">우리 아이 건강하개 20살까지</div>
+
+  <div class="status-box" id="statusBox">
+    기기를 확인하는 중...
+  </div>
+
+  <!-- Manual buttons (always shown as fallback) -->
+  <div class="manual-btns" id="manualBtns">
+    <a class="btn btn-ios" href="https://apps.apple.com/kr/app/%EA%B0%95%EC%A5%90%EC%96%B8%EB%8B%88/id6760122477" id="iosBtn">
+      <span class="btn-icon">🍎</span>
+      <span class="btn-text">App Store<small>iPhone / iPad</small></span>
+    </a>
+    <div class="divider">또는</div>
+    <a class="btn btn-android" href="https://play.google.com/store/apps/details?id=com.gangjiunni.app&pcampaignid=web_share" id="androidBtn">
+      <span class="btn-icon">▶</span>
+      <span class="btn-text">Google Play<small>Android</small></span>
+    </a>
+  </div>
+
+  <div class="footer">무료 다운로드 · iOS & Android</div>
+</div>
+
+<script>
+const IOS_URL = "https://apps.apple.com/kr/app/%EA%B0%95%EC%A5%90%EC%96%B8%EB%8B%88/id6760122477";
+const ANDROID_URL = "https://play.google.com/store/apps/details?id=com.gangjiunni.app&pcampaignid=web_share";
+
+function detectDevice() {
+  const ua = navigator.userAgent;
+  if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) return 'ios';
+  if (/android/i.test(ua)) return 'android';
+  return 'other';
+}
+
+const device = detectDevice();
+const statusBox = document.getElementById('statusBox');
+const iosBtn = document.getElementById('iosBtn');
+const androidBtn = document.getElementById('androidBtn');
+
+if (device === 'ios') {
+  statusBox.innerHTML = '📱 iPhone이 감지됐어요!<br><span>App Store로 이동합니다…</span>';
+  iosBtn.style.boxShadow = '0 0 0 3px #FF6B35, 0 0 0 5px #FFE0D0';
+  setTimeout(() => { window.location.href = IOS_URL; }, 1800);
+} else if (device === 'android') {
+  statusBox.innerHTML = '📱 Android 기기가 감지됐어요!<br><span>Google Play로 이동합니다…</span>';
+  androidBtn.style.boxShadow = '0 0 0 3px #FF6B35, 0 0 0 5px #FFE0D0';
+  setTimeout(() => { window.location.href = ANDROID_URL; }, 1800);
+} else {
+  statusBox.innerHTML = '💻 PC에서 접속하셨네요!<br><span>원하는 스토어를 선택해 주세요.</span>';
+}
+</script>
+</body>
+</html>
